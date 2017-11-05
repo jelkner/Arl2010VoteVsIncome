@@ -4,7 +4,6 @@ by Allen B. Downey, available from greenteapress.com
 Copyright 2014 Allen B. Downey
 License: GNU GPLv3 http://www.gnu.org/licenses/gpl.html
 """
-
 from __future__ import print_function, division
 
 import unittest
@@ -16,6 +15,7 @@ import numpy as np
 import thinkstats2
 import thinkplot
 
+
 class Test(unittest.TestCase):
 
     def testOdds(self):
@@ -25,10 +25,10 @@ class Test(unittest.TestCase):
 
         p = thinkstats2.Probability(o)
         self.assertEqual(p, 0.75)
-        
+
         p = thinkstats2.Probability2(3, 1)
         self.assertEqual(p, 0.75)
-        
+
     def testMean(self):
         t = [1, 1, 1, 3, 3, 591]
         mean = thinkstats2.Mean(t)
@@ -39,7 +39,7 @@ class Test(unittest.TestCase):
         mean = thinkstats2.Mean(t)
         var1 = thinkstats2.Var(t)
         var2 = thinkstats2.Var(t, mean)
-        
+
         self.assertAlmostEqual(mean, 100.0)
         self.assertAlmostEqual(var1, 48217.0)
         self.assertAlmostEqual(var2, 48217.0)
@@ -47,7 +47,7 @@ class Test(unittest.TestCase):
     def testMeanVar(self):
         t = [1, 1, 1, 3, 3, 591]
         mean, var = thinkstats2.MeanVar(t)
-        
+
         self.assertAlmostEqual(mean, 100.0)
         self.assertAlmostEqual(var, 48217.0)
 
@@ -133,8 +133,8 @@ class Test(unittest.TestCase):
         self.assertEqual(pmf, pmf2)
 
         xs, ys = pmf.Render()
-        self.assertEqual(tuple(xs), tuple(sorted(pmf.Values())))        
-        
+        self.assertEqual(tuple(xs), tuple(sorted(pmf.Values())))
+
     def testPmfAddSub(self):
         pmf = thinkstats2.Pmf([1, 2, 3, 4, 5, 6])
 
@@ -166,7 +166,7 @@ class Test(unittest.TestCase):
         self.assertAlmostEqual(pmf4.Mean(), 1.4291667)
 
     def testPmfProbLess(self):
-        d6 = thinkstats2.Pmf(range(1,7))
+        d6 = thinkstats2.Pmf(range(1, 7))
         self.assertEqual(d6.ProbLess(4), 0.5)
         self.assertEqual(d6.ProbGreater(3), 0.5)
         two = d6 + d6
@@ -177,7 +177,7 @@ class Test(unittest.TestCase):
         self.assertAlmostEqual(two.ProbLess(three), 0.778549382716049)
 
     def testPmfMax(self):
-        d6 = thinkstats2.Pmf(range(1,7))
+        d6 = thinkstats2.Pmf(range(1, 7))
         two = d6 + d6
         three = two + d6
         cdf = three.Max(6)
@@ -280,7 +280,7 @@ class Test(unittest.TestCase):
         cdf2 = cdf.Copy()
         self.assertEqual(cdf2.Prob(2), 0.6)
         self.assertEqual(cdf2.Value(0.6), 2)
-        
+
     def testShift(self):
         t = [1, 2, 2, 3, 5]
         cdf = thinkstats2.Cdf(t)
@@ -301,7 +301,7 @@ class Test(unittest.TestCase):
         self.assertEqual(ps[2], 0.2)
         self.assertEqual(sum(xs), 22)
         self.assertEqual(sum(ps), 4.2)
-        
+
     def testPmfFromCdf(self):
         t = [1, 2, 2, 3, 5]
         pmf = thinkstats2.Pmf(t)
@@ -330,13 +330,13 @@ class Test(unittest.TestCase):
         xs, ps = pmf.Render()
         self.assertEqual(xs[0], -5.0)
         self.assertAlmostEqual(ps[0], 0.00026656181123)
-        
+
         cdf = thinkstats2.Cdf(pdf)
         self.assertAlmostEqual(cdf[1.0], 0.51199756478094904)
         xs, ps = cdf.Render()
         self.assertEqual(xs[0], -5.0)
         self.assertAlmostEqual(ps[0], 0.0)
-        
+
     def testExponentialPdf(self):
         pdf = thinkstats2.ExponentialPdf(lam=0.5)
         self.assertEqual(len(str(pdf)), 24)
@@ -346,16 +346,16 @@ class Test(unittest.TestCase):
         xs, ps = pdf.Render()
         self.assertEqual(xs[0], 0.0)
         self.assertAlmostEqual(ps[0], 0.5)
-        
+
     def testEstimatedPdf(self):
         pdf = thinkstats2.EstimatedPdf([1, 2, 2, 3, 5])
         self.assertEqual(len(str(pdf)), 30)
         self.assertAlmostEqual(pdf.Density(3)[0], 0.19629968)
         pmf = pdf.MakePmf()
-        self.assertAlmostEqual(pmf[1.0], 0.010172282816895044)        
+        self.assertAlmostEqual(pmf[1.0], 0.010172282816895044)
         pmf = pdf.MakePmf(low=0, high=6)
         self.assertAlmostEqual(pmf[0.0], 0.0050742294053582942)
-        
+
     def testEvalNormalCdf(self):
         p = thinkstats2.EvalNormalCdf(0)
         self.assertAlmostEqual(p, 0.5)
@@ -389,17 +389,17 @@ class Test(unittest.TestCase):
         self.assertAlmostEqual(thinkstats2.Corr(t, a), 1)
         self.assertAlmostEqual(thinkstats2.Corr(t, -a), -1)
         self.assertAlmostEqual(thinkstats2.Corr(t, t2), -0.1878787878)
-        
+
         self.assertAlmostEqual(thinkstats2.SpearmanCorr(t, -a), -1)
         self.assertAlmostEqual(thinkstats2.SpearmanCorr(t, t2), -0.1878787878)
-        
+
 #     def testReadStataDct(self):
 #         dct = thinkstats2.ReadStataDct('2002FemPreg.dct')
 #         self.assertEqual(len(dct.variables), 243)
 #         self.assertEqual(len(dct.colspecs), 243)
 #         self.assertEqual(len(dct.names), 243)
 #         self.assertEqual(dct.colspecs[-1][1], -1)
-# 
+#
 
     def testCdfProbs(self):
         t = [-1, 1, 2, 2, 3, 5]
