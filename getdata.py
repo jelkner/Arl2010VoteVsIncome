@@ -18,6 +18,15 @@ def ReadCSV(url):
     return df
 
 
+def ReadArlingtonData(df):
+    """Extract Arlington data from a DataFrame.
+
+    df: pandas DataFrame
+
+    returns: DataFrame with rows containing Arlington
+    """
+
+
 def main():
     pass
 
