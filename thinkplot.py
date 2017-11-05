@@ -4,7 +4,6 @@ by Allen B. Downey, available from greenteapress.com
 Copyright 2014 Allen B. Downey
 License: GNU GPLv3 http://www.gnu.org/licenses/gpl.html
 """
-
 from __future__ import print_function
 
 import math
@@ -16,17 +15,17 @@ import pandas
 import warnings
 
 # customize some matplotlib attributes
-#matplotlib.rc('figure', figsize=(4, 3))
+# matplotlib.rc('figure', figsize=(4, 3))
 
-#matplotlib.rc('font', size=14.0)
-#matplotlib.rc('axes', labelsize=22.0, titlesize=22.0)
-#matplotlib.rc('legend', fontsize=20.0)
+# matplotlib.rc('font', size=14.0)
+# matplotlib.rc('axes', labelsize=22.0, titlesize=22.0)
+# matplotlib.rc('legend', fontsize=20.0)
 
-#matplotlib.rc('xtick.major', size=6.0)
-#matplotlib.rc('xtick.minor', size=3.0)
+# matplotlib.rc('xtick.major', size=6.0)
+# matplotlib.rc('xtick.minor', size=3.0)
 
-#matplotlib.rc('ytick.major', size=6.0)
-#matplotlib.rc('ytick.minor', size=3.0)
+# matplotlib.rc('ytick.major', size=6.0)
+# matplotlib.rc('ytick.minor', size=3.0)
 
 
 class _Brewer(object):
@@ -34,14 +33,14 @@ class _Brewer(object):
 
     Shades of blue that look good in color and can be distinguished
     in grayscale (up to a point).
-    
+
     Borrowed from http://colorbrewer2.org/
     """
     color_iter = None
 
     colors = ['#f7fbff', '#deebf7', '#c6dbef',
               '#9ecae1', '#6baed6', '#4292c6',
-              '#2171b5','#08519c','#08306b'][::-1]
+              '#2171b5', '#08519c', '#08306b'][::-1]
 
     # lists that indicate which colors to use depending on how many are used
     which_colors = [[],
@@ -79,7 +78,7 @@ class _Brewer(object):
         """Initializes the color iterator with the given number of colors."""
         cls.color_iter = cls.ColorGenerator(num)
         fig = plt.gcf()
-        cls.current_figure = fig  
+        cls.current_figure = fig
 
     @classmethod
     def ClearIter(cls):
@@ -93,7 +92,7 @@ class _Brewer(object):
         fig = plt.gcf()
         if fig != cls.current_figure:
             cls.InitIter(num)
-            cls.current_figure = fig  
+            cls.current_figure = fig
 
         if cls.color_iter is None:
             cls.InitIter(num)
@@ -167,6 +166,7 @@ def PrePlot(num=None, rows=None, cols=None):
         ax = plt.gca()
 
     return ax
+
 
 def SubPlot(plot_number, rows=None, cols=None, **options):
     """Configures the number of subplots and changes the current plot.
@@ -304,7 +304,7 @@ def Scatter(xs, ys=None, **options):
     ys: y values
     options: options passed to plt.scatter
     """
-    options = _Underride(options, color='blue', alpha=0.2, 
+    options = _Underride(options, color='blue', alpha=0.2,
                          s=30, edgecolors='none')
 
     if ys is None and isinstance(xs, pandas.Series):
@@ -344,7 +344,7 @@ def Pdfs(pdfs, **options):
 
     Options are passed along for all PDFs.  If you want different
     options for each pdf, make multiple calls to Pdf.
-    
+
     Args:
       pdfs: sequence of PDF objects
       options: keyword args passed to plt.plot
@@ -382,9 +382,9 @@ def Hist(hist, **options):
             options['width'] = 0.9 * np.diff(xs).min()
         except TypeError:
             warnings.warn("Hist: Can't compute bar width automatically."
-                            "Check for non-numeric types in Hist."
-                            "Or try providing width option."
-                            )
+                          "Check for non-numeric types in Hist."
+                          "Or try providing width option."
+                          )
 
     options = _Underride(options, label=hist.label)
     options = _Underride(options, align='center')
@@ -462,7 +462,7 @@ def Pmfs(pmfs, **options):
 
     Options are passed along for all PMFs.  If you want different
     options for each pmf, make multiple calls to Pmf.
-    
+
     Args:
       pmfs: sequence of PMF objects
       options: keyword args passed to plt.plot
@@ -503,7 +503,7 @@ def Cdf(cdf, complement=False, transform=None, **options):
 
     scale = dict(xscale='linear', yscale='linear')
 
-    for s in ['xscale', 'yscale']: 
+    for s in ['xscale', 'yscale']:
         if s in options:
             scale[s] = options.pop(s)
 
@@ -539,7 +539,7 @@ def Cdf(cdf, complement=False, transform=None, **options):
 
 def Cdfs(cdfs, complement=False, transform=None, **options):
     """Plots a sequence of CDFs.
-    
+
     cdfs: sequence of CDF objects
     complement: boolean, whether to plot the complementary CDF
     transform: string, one of 'exponential', 'pareto', 'weibull', 'gumbel'
@@ -551,7 +551,7 @@ def Cdfs(cdfs, complement=False, transform=None, **options):
 
 def Contour(obj, pcolor=False, contour=True, imshow=False, **options):
     """Makes a contour plot.
-    
+
     d: map from (x, y) to z, or object that provides GetDict
     pcolor: boolean, whether to make a pseudocolor plot
     contour: boolean, whether to make a contour plot
@@ -586,11 +586,11 @@ def Contour(obj, pcolor=False, contour=True, imshow=False, **options):
     if imshow:
         extent = xs[0], xs[-1], ys[0], ys[-1]
         plt.imshow(Z, extent=extent, **options)
-        
+
 
 def Pcolor(xs, ys, zs, pcolor=True, contour=False, **options):
     """Makes a pseudocolor plot.
-    
+
     xs:
     ys:
     zs:
@@ -613,7 +613,7 @@ def Pcolor(xs, ys, zs, pcolor=True, contour=False, **options):
     if contour:
         cs = plt.contour(X, Y, Z, **options)
         plt.clabel(cs, inline=1, fontsize=10)
-        
+
 
 def Text(x, y, s, **options):
     """Puts text in a figure.
@@ -632,6 +632,7 @@ def Text(x, y, s, **options):
 
 LEGEND = True
 LOC = None
+
 
 def Config(**options):
     """Configures the plot.
